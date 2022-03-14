@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+    quitting-eurorack:
+      container_name: quitting-eurorack
+      build: .
+      networks:
+        - caddy
+      labels:
+        caddy: quitting-eurorack.reges.fr
+        caddy.reverse_proxy: "{{upstreams 3000}}"
+
+networks:
+  caddy:
+    external: true
