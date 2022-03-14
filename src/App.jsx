@@ -22,7 +22,7 @@ function App() {
               <th>Manufacturer</th>
               <th>Name</th>
               <th>Price</th>
-              <th>Link</th>
+              <th>Wanna buy ?</th>
             </tr>
           </thead>
           <tbody>
