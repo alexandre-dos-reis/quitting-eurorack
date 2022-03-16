@@ -7,5 +7,11 @@ RUN pnpm install
 ADD . .
 RUN pnpm build
 
-FROM lipanski/docker-static-website:latest
-COPY --from=builder /app/dist .
+# FROM lipanski/docker-static-website:latest
+# COPY --from=builder /app/dist .
+
+# https://github.com/PierreZ/goStatic
+FROM pierrezemb/gostatic:latest
+COPY --from=builder /app/dist /srv/http
+EXPOSE 8043
+CMD ["goStatic"]

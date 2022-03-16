@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import useAxios from "axios-hooks";
 
 function App() {
@@ -22,6 +21,7 @@ function App() {
               <th>Manufacturer</th>
               <th>Name</th>
               <th>Price</th>
+              {/* <th>Pictures</th> */}
               <th>Wanna buy ?</th>
             </tr>
           </thead>
@@ -72,6 +72,16 @@ function App() {
                       <td>{m.manufacturer}</td>
                       <td>{m.name}</td>
                       <td style={{ textAlign: "end" }}>{m.price} €</td>
+                      {/* <td>
+                        <div className="images">
+                          {m.pictures.map((p) => (
+                            <img
+                              src={`https://office.alexandre-dosreis.me/assets/${p.directus_files_id}`}
+                              alt={m.name}
+                            />
+                          ))}
+                        </div>
+                      </td> */}
                       <td style={{ textAlign: "center" }}>
                         {m.modulargrid ? (
                           <a
