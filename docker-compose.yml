@@ -4,4 +4,4 @@ services:
       build: .
       container_name: quitting-eurorack
       ports:
-        - 3000:3000
+        - 8043:8043

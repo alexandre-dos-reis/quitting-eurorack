@@ -7,7 +7,7 @@ services:
         - caddy
       labels:
         caddy: quitting-eurorack.reges.fr
-        caddy.reverse_proxy: "{{upstreams 3000}}"
+        caddy.reverse_proxy: "{{upstreams 8043}}"
 
 networks:
   caddy:
