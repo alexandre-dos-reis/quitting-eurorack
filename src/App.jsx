@@ -1,8 +1,8 @@
 import useAxios from "axios-hooks";
 
 function App() {
-  const [{ data, loading, error }, refetch] = useAxios(
-    "https://office.alexandre-dosreis.me/items/module?fields=id,manufacturer,name,first_owner,box_included,price,condition,is_sold,modulargrid,rack-rash,pictures.directus_files_id"
+  const [{ data, loading, error }] = useAxios(
+    "https://office.alexandre-dosreis.me/items/module?fields=id,manufacturer,name,first_owner,box_included,price,condition,is_sold,modulargrid,rack-rash,pictures.*"
   );
 
   if (loading) return <p>Loading...</p>;
@@ -10,9 +10,15 @@ function App() {
 
   const modules = data.data;
 
+  const amountSold = modules
+    .filter((m) => m.is_sold === true)
+    .map((m) => m.price)
+    .reduce((a, b) => a + b, 0);
+
   return (
     <div className="App">
       <h1>&#128512; Hello, I'm quitting Eurorack. &#128557;</h1>
+      {/* <h2>&#128176; {amountSold} € &#128176;</h2> */}
       <h2>Here's my selling list:</h2>
       <div className="table">
         <table>
@@ -21,7 +27,7 @@ function App() {
               <th>Manufacturer</th>
               <th>Name</th>
               <th>Price</th>
-              {/* <th>Pictures</th> */}
+              <th>Pictures</th>
               <th>Wanna buy ?</th>
             </tr>
           </thead>
@@ -53,7 +59,8 @@ function App() {
                         module there.
                         <br />
                         <br />
-                        You can view my selling list [here](https://quitting-eurorack.reges.fr).
+                        You can view my selling list
+                        [here](https://quitting-eurorack.reges.fr).
                         <br />
                         <br />
                         Best,
@@ -62,7 +69,7 @@ function App() {
                         <br />
                         <br />
                         {m.pictures.map((p) => (
-                          <p>
+                          <p key={p.id}>
                             ![{m.name}](
                             {`https://office.alexandre-dosreis.me/assets/${p.directus_files_id}`}
                             )
@@ -72,20 +79,23 @@ function App() {
                       <td>{m.manufacturer}</td>
                       <td>{m.name}</td>
                       <td style={{ textAlign: "end" }}>{m.price} €</td>
-                      {/* <td>
+                      <td>
                         <div className="images">
                           {m.pictures.map((p) => (
-                            <img
-                              src={`https://office.alexandre-dosreis.me/assets/${p.directus_files_id}`}
-                              alt={m.name}
-                            />
+                            <a
+                              href={`https://office.alexandre-dosreis.me/assets/${p.directus_files_id}`}
+                              target="_blank"
+                            >
+                              &#128444;&#65039;
+                            </a>
                           ))}
                         </div>
-                      </td> */}
+                      </td>
                       <td style={{ textAlign: "center" }}>
                         {m.modulargrid ? (
                           <a
                             href={`https://www.modulargrid.net/e/offers/view/${m.modulargrid}`}
+                            target="_blank"
                           >
                             See offer on MG
                           </a>
