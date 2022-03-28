@@ -1,29 +1,42 @@
 import useAxios from "axios-hooks";
 
+const calculateAmount = (modules) => {
+  return modules.map((m) => m.price).reduce((a, b) => a + b, 0);
+};
+
 function App() {
   const [{ data, loading, error }] = useAxios(
-    "https://office.alexandre-dosreis.me/items/module?fields=id,manufacturer,name,first_owner,box_included,price,condition,is_sold,modulargrid,rack-rash,pictures.*"
+    "https://office.alexandre-dosreis.me/items/module?fields=id,manufacturer,name,on_sale,first_owner,box_included,price,condition,is_sold,modulargrid,rack-rash,pictures.*"
   );
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
+  if (loading)
+    return (
+      <div className="App">
+        <h1>Loading...</h1>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="App">
+        <h1>Error !</h1>
+      </div>
+    );
 
   const modules = data.data;
-
-  const amountSold = modules
-    .filter((m) => m.is_sold === true)
-    .map((m) => m.price)
-    .reduce((a, b) => a + b, 0);
+  // const amountSold = calculateAmount(modules.filter((m) => m.is_sold === true));
+  // const totalAmount = calculateAmount(modules.filter((m) => m.on_sale === true));
 
   return (
     <div className="App">
       <h1>&#128512; Hello, I'm quitting Eurorack. &#128557;</h1>
-      {/* <h2>&#128176; {amountSold} € &#128176;</h2> */}
+      {/* <h2>&#128176; Total : {totalAmount} € &#128176;</h2>
+      <h2>&#128176; Sold : {amountSold} € &#128176;</h2> */}
       <h2>Here's my selling list:</h2>
       <div className="table">
         <table>
           <thead>
             <tr>
+              {/* <th>Markdown</th> */}
               <th>Manufacturer</th>
               <th>Name</th>
               <th>Price</th>
@@ -40,7 +53,8 @@ function App() {
               })
               .map(
                 (m) =>
-                  !m.is_sold && (
+                  !m.is_sold &&
+                  m.on_sale && (
                     <tr key={m.id}>
                       {/* <td>
                         Hello, I'm quitting Eurorack. I'm selling my{" "}
