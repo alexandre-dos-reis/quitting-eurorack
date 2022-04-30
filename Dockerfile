@@ -3,7 +3,7 @@ RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
 RUN mkdir -p /app
 COPY . /app
 WORKDIR /app
-RUN pnpm install --prod && pnpm build
+RUN pnpm install && pnpm build
 
 # https://github.com/PierreZ/goStatic
 FROM pierrezemb/gostatic:latest
