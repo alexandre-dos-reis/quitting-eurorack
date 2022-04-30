@@ -14,3 +14,4 @@ steps:
 - name: Deploy via docker
   commands:
     - sudo docker-compose -f docker-compose-prod.yml up -d --build --force-recreate
+    - sudo docker image prune -af
