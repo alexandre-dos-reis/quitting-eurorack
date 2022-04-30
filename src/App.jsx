@@ -23,14 +23,18 @@ function App() {
     );
 
   const modules = data.data;
-  // const amountSold = calculateAmount(modules.filter((m) => m.is_sold === true));
-  // const totalAmount = calculateAmount(modules.filter((m) => m.on_sale === true));
+  const totalAmount = calculateAmount(
+    modules.filter((m) => {
+      return m.on_sale === true || m.is_sold === true;
+    })
+  );
+  const amountSold = calculateAmount(modules.filter((m) => m.is_sold === true));
 
   return (
     <div className="App">
       <h1>&#128512; Hello, I'm quitting Eurorack. &#128557;</h1>
-      {/* <h2>&#128176; Total : {totalAmount} € &#128176;</h2>
-      <h2>&#128176; Sold : {amountSold} € &#128176;</h2> */}
+      <h2>&#128176; Total : {totalAmount} € &#128176;</h2>
+      <h2>&#128176; Sold : {amountSold} € &#128176;</h2>
       <h2>Here's my selling list:</h2>
       <div className="table">
         <table>
@@ -95,8 +99,9 @@ function App() {
                       <td style={{ textAlign: "end" }}>{m.price} €</td>
                       <td>
                         <div className="images">
-                          {m.pictures.map((p) => (
+                          {m.pictures.map((p, i) => (
                             <a
+                              key={i}
                               href={`https://office.alexandre-dosreis.me/assets/${p.directus_files_id}`}
                               target="_blank"
                             >
@@ -107,12 +112,18 @@ function App() {
                       </td>
                       <td style={{ textAlign: "center" }}>
                         {m.modulargrid ? (
-                          <a
-                            href={`https://www.modulargrid.net/e/offers/view/${m.modulargrid}`}
-                            target="_blank"
-                          >
-                            See offer on MG
-                          </a>
+                          m.modulargrid.startsWith("http") ? (
+                            <a href={m.modulargrid} target="_blank">
+                              See offer on Reverb
+                            </a>
+                          ) : (
+                            <a
+                              href={`https://www.modulargrid.net/e/offers/view/${m.modulargrid}`}
+                              target="_blank"
+                            >
+                              See offer on MG
+                            </a>
+                          )
                         ) : (
                           <a
                             href={`mailto:ajm.dosreis.daponte@gmail.com?subject=${m.manufacturer} - ${m.name}`}

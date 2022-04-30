@@ -1,0 +1,16 @@
+kind: pipeline
+type: ssh
+name: Deploy
+
+server:
+  host:
+    from_secret: HOST_ADDR
+  user:
+    from_secret: USER
+  password:
+    from_secret: PASSWORD
+
+steps:
+- name: Deploy via docker
+  commands:
+    - sudo docker-compose -f docker-compose.prod.yml up -d --build --force-recreate
