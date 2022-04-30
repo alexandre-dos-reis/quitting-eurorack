@@ -33,8 +33,8 @@ function App() {
   return (
     <div className="App">
       <h1>&#128512; Hello, I'm quitting Eurorack. &#128557;</h1>
-      <h2>&#128176; Total : {totalAmount} € &#128176;</h2>
-      <h2>&#128176; Sold : {amountSold} € &#128176;</h2>
+      {/* <h2>&#128176; Total : {totalAmount} € &#128176;</h2>
+      <h2>&#128176; Sold : {amountSold} € &#128176;</h2> */}
       <h2>Here's my selling list:</h2>
       <div className="table">
         <table>
